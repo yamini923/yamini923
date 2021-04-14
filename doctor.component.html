@@ -1,0 +1,37 @@
+
+
+<form [formGroup]="doctorForm">
+Doctor Id:
+<input type="text" class="form-control" formControlName="doctorId">
+First Name:
+<input type="text" class="form-control" formControlName="doctorFirstName">
+Last Name:
+<input type="text" class="form-control" formControlName="doctorLastName">
+Phone Number:
+<input type="text" class="form-control" formControlName="doctorPhoneNumber">
+Email-Id:
+<input type="text" class="form-control" formControlName="doctorEmail">
+Qualification:
+<input type="text" class="form-control" formControlName="qualification">
+Profile photo:
+    <input type="file" formControlName="profilePicture"  (change)="onFileChanged($event)">
+
+
+
+<input type="button" (click)="onUpload()" value="upload">
+
+<hr />
+
+<!--Received Image:
+
+{{ receivedImageData['profilePicture'] | json}}-->
+<!--<img [src]="convertedImage" >-->
+
+<input type="submit" value="Add" class="btn btn-success"(click)="fnAdd()">&nbsp; &nbsp; &nbsp;
+<input type="submit" value="Modify" class="btn btn-warning"(click)="fnModify()">&nbsp; &nbsp; &nbsp;
+<input type="submit" value="Delete" class="btn btn-danger"(click)="fnDelete()">
+</form>
+
+
+
+
