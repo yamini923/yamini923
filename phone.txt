@@ -1,0 +1,59 @@
+<div class="form-group">
+                             <label for="">YOUR PHONE NUMBER </label>
+                        <input (keypress)="keyPress($event)" required type="text" formControlName="phonenumber" class="form-control" placeholder="Enter Your phone Number" [ngClass]="{ 'is-invalid': submitted && f.phonenumber.errors }">
+                        <div *ngIf="submitted && f.phonenumber.errors" class="invalid-feedback">
+                        <div *ngIf="f.phonenumber.errors.required">Phone number is required</div>
+                        <div *ngIf="f.phonenumber.errors.pattern || f.phonenumber.errors.maxlength || f.phonenumber.errors.minlength">Phone number must be at least 10 numbers</div>
+                    </div>
+                    </div>
+------------------------------------------------------------
+.ts
+
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup,FormControl,Validators} from '@angular/forms';
+
+@Component({
+  selector: 'app-login-form',
+  templateUrl: './login-form.component.html',
+  styleUrls: ['./login-form.component.styl']
+})
+
+export class LoginFormComponent implements OnInit {
+    loginForm: any;
+    submitted = false;
+
+    constructor(private formBuilder: FormBuilder) { }
+      keyPress(event: any) {
+    const pattern = /[0-9\+\-\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+
+    ngOnInit() {
+        this.loginForm = this.formBuilder.group({
+            email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+            password: ['', [Validators.required, Validators.minLength(6)]],
+                   phonenumber: ['', [ Validators.required,
+        Validators.pattern("^[0-9]*$"),
+        Validators.minLength(10), Validators.maxLength(10)]]
+        });
+    }
+
+    // convenience getter for easy access to form fields
+    get f() { return this.loginForm.controls; }
+
+    onSubmit() {
+        this.submitted = true;
+
+        // stop here if form is invalid
+        if (this.loginForm.invalid) {
+            return;
+        }
+
+        alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.loginForm.value))
+    }
+}
+ 
